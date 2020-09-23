@@ -53,9 +53,8 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Variable}" TextColor="{StaticResource NeutralGray8}"/>
+                                <Label Text="{Binding Variable}" FontAttributes="Bold" TextColor="{StaticResource NeutralGray8}"/>
                                 <Label Text="{Binding Value}" TextColor="{StaticResource NeutralGray8}"/>
-
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

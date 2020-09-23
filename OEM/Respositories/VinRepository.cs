@@ -24,7 +24,14 @@ namespace OEM.Respositories
 
             foreach (VehicleResult vehicleResult in result.Results)
             {
-                results.Add(vehicleResult);
+                if (vehicleResult.Variable == "Body Class"
+                    || vehicleResult.Variable == "Engine Brake (hp)"
+                    || vehicleResult.Variable == "Make"
+                    || vehicleResult.Variable == "Model"
+                    || vehicleResult.Variable == "Model Year")
+                {
+                    results.Add(vehicleResult);
+                }
             }
 
             var mappedResult = new BasicVehicleInformation
