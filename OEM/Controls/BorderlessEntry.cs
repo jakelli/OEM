@@ -5,8 +5,5 @@ namespace OEM.Controls
 {
     public class BorderlessEntry : Entry
     {
-        public BorderlessEntry()
-        {
-        }
     }
 }
