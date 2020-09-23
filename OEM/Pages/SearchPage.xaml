@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:OEM.Controls"
+             x:Class="OEM.Pages.SearchPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+            <StackLayout BackgroundColor="{StaticResource Key=NeutralGray8}"
+                     HeightRequest="60"
+                     Padding="8,16,8,16">
+                <Frame
+                    Padding="0"
+                    HeightRequest="50"
+                    BorderColor="White"
+                    CornerRadius="4">
+
+                    <StackLayout Orientation="Horizontal">
+                        <controls:BorderlessEntry
+                            x:Name="SearchEntry"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Enter/Scan VIN">
+                        </controls:BorderlessEntry>
+
+                        <Label Text="{Binding ScanIcon}"
+                               Padding="0,0,8,0"
+                               VerticalOptions="CenterAndExpand"
+                               FontFamily="MaterialDesignIcon"
+                               FontSize="30"
+                               TextColor="{StaticResource Key=NeutralGray8}"
+                               HorizontalOptions="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ScanCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <StackLayout Margin="0,-20,0,0" VerticalOptions="FillAndExpand">
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
