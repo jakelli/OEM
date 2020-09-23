@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:OEM.Controls"
+             xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
              x:Class="OEM.Pages.SearchPage"
              Title="OEM+">
     <ContentPage.Content>
@@ -25,6 +26,12 @@
                             TextColor="{StaticResource NeutralGray8}"
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Enter/Scan VIN">
+                            <controls:BorderlessEntry.Behaviors>
+                                <behaviorsPack:EventToCommandBehavior
+                                    EventName="Completed"
+                                    Command="{Binding SearchCommand}"
+                                    CommandParameter="{Binding SearchTerm}"/>
+                            </controls:BorderlessEntry.Behaviors>
                         </controls:BorderlessEntry>
 
                         <Label Text="{Binding ScanIcon}"

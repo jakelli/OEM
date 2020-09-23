@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Acr.UserDialogs;
 using OEM.Helpers;
+using OEM.Extensions;
 using OEM.Models;
 using OEM.Webservices.Dtos;
 using OEM.Respositories;
@@ -52,6 +53,31 @@ namespace OEM.Pages
             }
         }
 
+        public Command SearchCommand
+        {
+            get
+            {
+                return new Command(async (object vin) =>
+                {
+                    UserDialogs.Instance.ShowLoading();
+
+                    var vehicleDataResponse = await _vinRepository.GetBasicInformationByVin(vin.ToString());
+                    if (vehicleDataResponse.IsSuccess)
+                    {
+                        BasicVehicleDetails = vehicleDataResponse.BasicVehicleInformation.Results;
+                        SearchTerm = vin.ToString().ToUpper();
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "No information for: " + vin.ToString().ToUpper()));
+                    }
+
+                    UserDialogs.Instance.HideLoading();
+
+                });
+            }
+        }
+
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -64,20 +90,16 @@ namespace OEM.Pages
 
         private async void HandleBarcodeResult(Result barcodeResult)
         {
-            UserDialogs.Instance.ShowLoading();
-            var vehicleDataResponse = await _vinRepository.GetBasicInformationByVin("WBA3A9C58FKW74879");
-            if (vehicleDataResponse.IsSuccess)
+            // ensure the entered value is actually a 17 character VIN
+            if (!barcodeResult.Text.IsValidVin())
             {
-                BasicVehicleDetails = vehicleDataResponse.BasicVehicleInformation.Results;
-                //SearchTerm = barcodeResult.Text.ToUpper();
-                SearchTerm = "WBA3A9C58FKW74879";
-            }
-            else
-            {
-                UserDialogs.Instance.Toast("Invalid VIN");
+                UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
+                return;
             }
 
-            UserDialogs.Instance.HideLoading();
+            SearchCommand.Execute(barcodeResult.Text);
         }
+
+
     }
 }

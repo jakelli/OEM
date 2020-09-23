@@ -32,6 +32,11 @@ namespace OEM.Respositories
                 {
                     results.Add(vehicleResult);
                 }
+
+                if (vehicleResult.Variable == "Error Code" && vehicleResult.Value != "0")
+                {
+                    return (null, false);
+                }
             }
 
             var mappedResult = new BasicVehicleInformation
@@ -41,6 +46,7 @@ namespace OEM.Respositories
                 Message = result.Message,
                 Results = results
             };
+
             return (mappedResult, result.IsSuccess);
         }
     }
