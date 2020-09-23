@@ -13,6 +13,7 @@
                     Padding="0"
                     HeightRequest="50"
                     HasShadow="False"
+                    BackgroundColor="White"
                     BorderColor="White"
                     CornerRadius="4">
 
