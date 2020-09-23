@@ -17,7 +17,9 @@ namespace OEM.Pages
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                await DisplayAlert("Scanned result", result.Text, "OK");
+                //await DisplayAlert("Scanned result", result.Text, "OK");
+                var viewModel = (ScanPageViewModel)this.BindingContext;
+                viewModel.ScanCommand.Execute(result);
             });
         }
     }

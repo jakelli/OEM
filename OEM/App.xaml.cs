@@ -23,16 +23,16 @@ namespace OEM
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("SearchPage");
+            await NavigationService.NavigateAsync("MainNavigationPage/SearchPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainNavigationPage, MainNavigationPageViewModel>();
             containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<ScanPage, ScanPageViewModel>();
 
-            containerRegistry.RegisterInstance<IVinWebservice>(new VinWebservice());
+            containerRegistry.RegisterInstance<IVinWebservice>(new MockVinWebservice());
 
             containerRegistry.RegisterSingleton<IVinRepository, VinRepository>();
         }

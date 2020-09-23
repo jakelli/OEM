@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using Acr.UserDialogs;
 using OEM.Helpers;
 using Prism.Navigation;
 using Xamarin.Forms;
+using ZXing;
 
 namespace OEM.Pages
 {
@@ -28,6 +30,21 @@ namespace OEM.Pages
 
                 });
             }
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            var barcodeResult = parameters.GetValue<Result>("BarcodeResult");
+            if (barcodeResult != null)
+            {
+                HandleBarcodeResult(barcodeResult);
+            }
+        }
+
+        private void HandleBarcodeResult(Result barcodeResult)
+        {
+            UserDialogs.Instance.Toast("VIN Scanned: " + barcodeResult.Text);
         }
     }
 }

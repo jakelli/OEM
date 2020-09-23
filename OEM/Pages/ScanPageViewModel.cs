@@ -2,14 +2,18 @@
 using OEM.Helpers;
 using Prism.Navigation;
 using Xamarin.Forms;
+using ZXing;
 
 namespace OEM.Pages
 {
     public class ScanPageViewModel : BaseViewModel
     {
+        private readonly INavigationService _navigationService;
+
         public ScanPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
+            _navigationService = navigationService;
             Title = "Scanner";
         }
 
@@ -17,9 +21,17 @@ namespace OEM.Pages
         {
             get
             {
-                return new Command(() =>
+                return new Command(async (object result) =>
                 {
-
+                    var barcodeResult = (Result)result;
+                    if (barcodeResult != null)
+                    {
+                        var navigationParameters = new NavigationParameters
+                        {
+                            { "BarcodeResult", result }
+                        };
+                        await _navigationService.GoBackAsync(navigationParameters);
+                    }
 
                 });
             }

@@ -2,15 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:OEM.Controls"
-             x:Class="OEM.Pages.SearchPage">
+             x:Class="OEM.Pages.SearchPage"
+             Title="OEM+">
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
             <StackLayout BackgroundColor="{StaticResource Key=NeutralGray8}"
                      HeightRequest="60"
-                     Padding="8,16,8,16">
+                     Padding="8,0,8,16">
                 <Frame
                     Padding="0"
                     HeightRequest="50"
+                    HasShadow="False"
                     BorderColor="White"
                     CornerRadius="4">
 
