@@ -15,11 +15,14 @@
                     HasShadow="False"
                     BackgroundColor="White"
                     BorderColor="White"
-                    CornerRadius="4">
+                    CornerRadius="10">
 
                     <StackLayout Orientation="Horizontal">
                         <controls:BorderlessEntry
+                            Margin="8,0,0,0"
                             x:Name="SearchEntry"
+                            Text="{Binding SearchTerm, Mode=TwoWay}"
+                            TextColor="{StaticResource NeutralGray8}"
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Enter/Scan VIN">
                         </controls:BorderlessEntry>
@@ -39,8 +42,10 @@
                     </StackLayout>
                 </Frame>
             </StackLayout>
-            <StackLayout Margin="0,-20,0,0" VerticalOptions="FillAndExpand">
-
+            <StackLayout  Orientation="Horizontal" Padding="8">
+                <Label Text="{Binding BasicVehicle.Year}" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Text="{Binding BasicVehicle.Make}" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Text="{Binding BasicVehicle.Model}" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

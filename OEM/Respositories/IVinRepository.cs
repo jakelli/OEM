@@ -7,7 +7,7 @@ namespace OEM.Respositories
 {
     public interface IVinRepository
     {
-        Task<(BasicVehicleInformation, bool IsSuccess)> GetBasicInformationByVin(string vin);
+        Task<(BasicVehicleInformation BasicVehicleInformation, bool IsSuccess)> GetBasicInformationByVin(string vin);
     }
 }
 

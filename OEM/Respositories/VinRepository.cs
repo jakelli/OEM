@@ -14,7 +14,7 @@ namespace OEM.Respositories
             _vinWebservice = vinWebservice;
         }
 
-        public async Task<(BasicVehicleInformation, bool IsSuccess)> GetBasicInformationByVin(string vin)
+        public async Task<(BasicVehicleInformation BasicVehicleInformation, bool IsSuccess)> GetBasicInformationByVin(string vin)
         {
             var result = await _vinWebservice.GetBasicInformationByVin(vin);
             var mappedResult = new BasicVehicleInformation
