@@ -30,7 +30,6 @@ namespace OEM.Webservices
                          if (numberOfRetries != retries)
                              return;
                              // only log if the final retry fails
-
                          }
                 );
 
