@@ -14,12 +14,7 @@ namespace OEM.Webservices
         {
             var response = new BasicVehicleInformationDto
             {
-                ErrorCode = "",
-                ErrorMessage = "",
-                IsSuccess = true,
-                Year = "2015",
-                Make = "BMW",
-                Model = "335i"
+                IsSuccess = true
             };
 
             return Task.FromResult(response);

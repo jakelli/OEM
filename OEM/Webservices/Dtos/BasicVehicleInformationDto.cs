@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace OEM.Webservices.Dtos
 {
     public class BasicVehicleInformationDto : Status
     {
-        public string Year { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
+        public int Count { get; set; }
+        public string Message { get; set; }
+        public string SearchCriteria { get; set; }
+        public List<VehicleResult> Results { get; set; }
     }
+
+    
 }

@@ -32,7 +32,7 @@ namespace OEM
             containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<ScanPage, ScanPageViewModel>();
 
-            containerRegistry.RegisterInstance<IVinWebservice>(new MockVinWebservice());
+            containerRegistry.RegisterInstance<IVinWebservice>(new VinWebservice());
 
             containerRegistry.RegisterSingleton<IVinRepository, VinRepository>();
         }

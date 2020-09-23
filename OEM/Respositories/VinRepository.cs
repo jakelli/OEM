@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using OEM.Models;
 using OEM.Webservices;
+using OEM.Webservices.Dtos;
 
 namespace OEM.Respositories
 {
@@ -17,13 +19,21 @@ namespace OEM.Respositories
         public async Task<(BasicVehicleInformation BasicVehicleInformation, bool IsSuccess)> GetBasicInformationByVin(string vin)
         {
             var result = await _vinWebservice.GetBasicInformationByVin(vin);
+
+            ObservableCollection<VehicleResult> results = new ObservableCollection<VehicleResult>();
+
+            foreach (VehicleResult vehicleResult in result.Results)
+            {
+                results.Add(vehicleResult);
+            }
+
             var mappedResult = new BasicVehicleInformation
             {
-                Make = result.Make,
-                Year = result.Year,
-                Model = result.Model
+                Count = result.Count,
+                SearchCriteria = result.SearchCriteria,
+                Message = result.Message,
+                Results = results
             };
-
             return (mappedResult, result.IsSuccess);
         }
     }

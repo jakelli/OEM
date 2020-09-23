@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Collections.ObjectModel;
 using Acr.UserDialogs;
 using OEM.Helpers;
 using OEM.Models;
+using OEM.Webservices.Dtos;
 using OEM.Respositories;
 using Prism.Navigation;
 using Xamarin.Forms;
@@ -14,11 +16,11 @@ namespace OEM.Pages
         private INavigationService _navigationService;
         private IVinRepository _vinRepository;
 
-        private BasicVehicleInformation basicVehicle;
-        public BasicVehicleInformation BasicVehicle
+        private ObservableCollection<VehicleResult> basicVehicleDetails = new ObservableCollection<VehicleResult>();
+        public ObservableCollection<VehicleResult> BasicVehicleDetails
         {
-            get => basicVehicle;
-            set => SetProperty(ref basicVehicle, value);
+            get => basicVehicleDetails;
+            set => SetProperty(ref basicVehicleDetails, value);
         }
 
         private string searchTerm;
@@ -60,14 +62,22 @@ namespace OEM.Pages
             }
         }
 
-        private void HandleBarcodeResult(Result barcodeResult)
+        private async void HandleBarcodeResult(Result barcodeResult)
         {
-            var vehicleDataResponse = _vinRepository.GetBasicInformationByVin(barcodeResult.Text);
-            if (vehicleDataResponse.Result.IsSuccess)
+            UserDialogs.Instance.ShowLoading();
+            var vehicleDataResponse = await _vinRepository.GetBasicInformationByVin("WBA3A9C58FKW74879");
+            if (vehicleDataResponse.IsSuccess)
             {
-                BasicVehicle = vehicleDataResponse.Result.BasicVehicleInformation;
-                SearchTerm = barcodeResult.Text.ToUpper();
+                BasicVehicleDetails = vehicleDataResponse.BasicVehicleInformation.Results;
+                //SearchTerm = barcodeResult.Text.ToUpper();
+                SearchTerm = "WBA3A9C58FKW74879";
             }
+            else
+            {
+                UserDialogs.Instance.Toast("Invalid VIN");
+            }
+
+            UserDialogs.Instance.HideLoading();
         }
     }
 }
