@@ -31,6 +31,13 @@ namespace OEM.Pages
             set => SetProperty(ref searchTerm, value);
         }
 
+        private bool isLoading;
+        public bool IsLoading
+        {
+            get => isLoading;
+            set => SetProperty(ref isLoading, value);
+        }
+
         public string ScanIcon => MaterialFontIcon.BarcodeScan;
 
         public SearchPageViewModel(INavigationService navigationService, IVinRepository vinRepository)
@@ -59,7 +66,15 @@ namespace OEM.Pages
             {
                 return new Command(async (object vin) =>
                 {
-                    UserDialogs.Instance.ShowLoading();
+
+                    if (vin.ToString() == null || !vin.ToString().IsValidVin())
+                    {
+                        UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
+                        BasicVehicleDetails.Clear();
+                        return;
+                    }
+
+                    IsLoading = true;
 
                     var vehicleDataResponse = await _vinRepository.GetBasicInformationByVin(vin.ToString());
                     if (vehicleDataResponse.IsSuccess)
@@ -69,11 +84,11 @@ namespace OEM.Pages
                     }
                     else
                     {
-                        UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "No information for: " + vin.ToString().ToUpper()));
+                        UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "No information for " + vin.ToString().ToUpper()));
+                        BasicVehicleDetails.Clear();
                     }
 
-                    UserDialogs.Instance.HideLoading();
-
+                    IsLoading = false;
                 });
             }
         }
@@ -94,6 +109,7 @@ namespace OEM.Pages
             if (!barcodeResult.Text.IsValidVin())
             {
                 UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
+                BasicVehicleDetails.Clear();
                 return;
             }
 

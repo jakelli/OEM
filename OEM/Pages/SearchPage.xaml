@@ -2,14 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:OEM.Controls"
+             xmlns:converters="clr-namespace:OEM.Converters"
+             xmlns:effects="clr-namespace:OEM.Effects"
              xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              x:Class="OEM.Pages.SearchPage"
              Title="OEM+">
+
+    <ContentPage.Resources>
+        <converters:InvertBoolConverter x:Key="InvertBool"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
+        <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <StackLayout BackgroundColor="{StaticResource Key=NeutralGray8}"
                      HeightRequest="60"
-                     Padding="8,0,8,16">
+                     Padding="8,0,8,8">
                 <Frame
                     Padding="0"
                     HeightRequest="50"
@@ -22,21 +29,28 @@
                         <controls:BorderlessEntry
                             Margin="8,0,0,0"
                             x:Name="SearchEntry"
+                            ClearButtonVisibility="WhileEditing"
                             Text="{Binding SearchTerm, Mode=TwoWay}"
                             TextColor="{StaticResource NeutralGray8}"
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Enter/Scan VIN">
+
+                            <controls:BorderlessEntry.Effects>
+                                <effects:ClearEntryEffect/>
+                            </controls:BorderlessEntry.Effects>
+
                             <controls:BorderlessEntry.Behaviors>
                                 <behaviorsPack:EventToCommandBehavior
                                     EventName="Completed"
                                     Command="{Binding SearchCommand}"
                                     CommandParameter="{Binding SearchTerm}"/>
                             </controls:BorderlessEntry.Behaviors>
+                            
                         </controls:BorderlessEntry>
 
                         <Label Text="{Binding ScanIcon}"
                                Padding="0,0,8,0"
-                               VerticalOptions="CenterAndExpand"
+                               VerticalOptions="Center"
                                FontFamily="MaterialDesignIcon"
                                FontSize="30"
                                TextColor="{StaticResource Key=NeutralGray8}"
@@ -49,24 +63,41 @@
                     </StackLayout>
                 </Frame>
             </StackLayout>
-            <ListView
+            <StackLayout
+                IsVisible="{Binding IsLoading}"
+                Padding="0,32,0,0"
+                VerticalOptions="StartAndExpand"
+                HorizontalOptions="CenterAndExpand">
+                <forms:AnimationView
+                    HeightRequest="200"
+                    WidthRequest="200"
+                    Animation="loading.json"
+                    AutoPlay="True"
+                    Loop="True"/>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding IsLoading,Converter={StaticResource InvertBool}}">
+                <ListView
                 BackgroundColor="White"
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
                 SeparatorVisibility="None"
                 ItemsSource="{Binding BasicVehicleDetails}">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Variable}" FontAttributes="Bold" TextColor="{StaticResource NeutralGray8}"/>
-                                <Label Text="{Binding Value}" TextColor="{StaticResource NeutralGray8}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Variable}" FontAttributes="Bold" TextColor="{StaticResource NeutralGray8}"/>
+                                    <Label Text="{Binding Value}" TextColor="{StaticResource NeutralGray8}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>
