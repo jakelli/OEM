@@ -45,7 +45,7 @@
                                     Command="{Binding SearchCommand}"
                                     CommandParameter="{Binding SearchTerm}"/>
                             </controls:BorderlessEntry.Behaviors>
-                            
+
                         </controls:BorderlessEntry>
 
                         <Label Text="{Binding ScanIcon}"
@@ -76,30 +76,74 @@
                     Loop="True"/>
             </StackLayout>
 
-            <StackLayout IsVisible="{Binding IsLoading,Converter={StaticResource InvertBool}}">
+            <StackLayout Padding="8,32,0,0" IsVisible="{Binding IsLoading,Converter={StaticResource InvertBool}}" Orientation="Horizontal">
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Year}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Make}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Model, StringFormat=' -  {0:N}'}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Trim}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+            </StackLayout>
+            <StackLayout Padding="8,0,0,0" IsVisible="{Binding IsLoading,Converter={StaticResource InvertBool}}">
+                <StackLayout Orientation="Horizontal">
+                    <Label Padding="0" Text="{Binding BasicVehicleDetails.Displacement, StringFormat='{0:N}L'}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Cylinders, StringFormat=' -  {0:N} Cylinder'}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
+                </StackLayout>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.PlantLocation, StringFormat='MANUFACTURED IN {0:N}'}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Vin}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
+            </StackLayout>
+
+            <BoxView
+                IsVisible="{Binding IsRecentSearchPopulated}"
+                Margin="0,16,0,16"
+                HeightRequest="2"
+                     WidthRequest="350"
+                     HorizontalOptions="Center"
+                     BackgroundColor="{StaticResource Key=NeutralGray}"/>
+
+            <StackLayout IsVisible="{Binding IsRecentSearchPopulated}"
+                Padding="0"
+                BackgroundColor="White">
+                <StackLayout Padding="8,0,0,0" Orientation="Horizontal">
+                    <Label Text="{Binding RecentIcon}" FontFamily="MaterialDesignIcon"/>
+                    <Label Text="Recent searches" TextColor="{StaticResource Key=NeutralGray5}"/>
+
+                </StackLayout>
+
                 <ListView
                 BackgroundColor="White"
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
                 SeparatorVisibility="None"
-                ItemsSource="{Binding BasicVehicleDetails}">
-
+                ItemsSource="{Binding RecentSearchResults}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Padding="8">
-                                    <Label Padding="8,0,8,0" Text="{Binding Variable}" FontAttributes="Bold" TextColor="{StaticResource NeutralGray8}"/>
-                                    <Label Padding="8,0,8,8" Text="{Binding Value}" TextColor="{StaticResource NeutralGray8}"/>
+                                <StackLayout Padding="8,8,0,24">
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Padding="0" Text="{Binding Year}" FontSize="Small" TextColor="{StaticResource NeutralGray8}"/>
+                                            <Label Padding="0" Text="{Binding Make}" FontSize="Small" TextColor="{StaticResource NeutralGray8}"/>
+                                            <Label Padding="0" Text="{Binding Model}" FontSize="Small" TextColor="{StaticResource NeutralGray8}"/>
+                                        </StackLayout>
+                                        <StackLayout Padding="0">
+                                            <Label Padding="0" Text="{Binding Vin}" FontSize="Small" TextColor="{StaticResource NeutralGray4}"/>
+                                        </StackLayout>
+                                    </StackLayout>
                                 </StackLayout>
+
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
             </StackLayout>
 
-            <StackLayout Padding="8,0,8,36" HeightRequest="48">
+            <StackLayout
+                IsVisible="{Binding IsRecentSearchPopulated}"
+                Padding="8,0,8,36"
+                VerticalOptions="EndAndExpand"
+                HeightRequest="48">
                 <Button HeightRequest="48"
-                        Text="Garage"
+                        Text="View Parts"
                         Command="{Binding OpenGarageCommand}"
                         FontAttributes="Bold"
                         FontSize="Medium"
@@ -108,7 +152,7 @@
                         BorderColor="{StaticResource NeutralGray8}"
                         CornerRadius="15"/>
             </StackLayout>
-            
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

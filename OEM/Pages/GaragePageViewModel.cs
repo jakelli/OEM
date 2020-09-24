@@ -9,7 +9,7 @@ namespace OEM.Pages
         public GaragePageViewModel(INavigationService navigationService)
         : base(navigationService)
         {
-            Title = "My Garage";
+            Title = "Part Catalog";
         }
     }
 }

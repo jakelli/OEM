@@ -17,11 +17,28 @@ namespace OEM.Pages
         private INavigationService _navigationService;
         private IVinRepository _vinRepository;
 
-        private ObservableCollection<VehicleResult> basicVehicleDetails = new ObservableCollection<VehicleResult>();
-        public ObservableCollection<VehicleResult> BasicVehicleDetails
+        private BasicVehicleInformation basicVehicleDetails;
+        public BasicVehicleInformation BasicVehicleDetails
         {
             get => basicVehicleDetails;
             set => SetProperty(ref basicVehicleDetails, value);
+        }
+
+        private ObservableCollection<BasicVehicleInformation> recentSearchResults = new ObservableCollection<BasicVehicleInformation>();
+        public ObservableCollection<BasicVehicleInformation> RecentSearchResults
+        {
+            get => recentSearchResults;
+            set
+            {
+                SetProperty(ref recentSearchResults, value);
+            }
+        }
+
+        private bool isRecentSearchPopulated;
+        public bool IsRecentSearchPopulated
+        {
+            get => isRecentSearchPopulated;
+            set => SetProperty(ref isRecentSearchPopulated, value);
         }
 
         private string searchTerm;
@@ -39,6 +56,7 @@ namespace OEM.Pages
         }
 
         public string ScanIcon => MaterialFontIcon.BarcodeScan;
+        public string RecentIcon => MaterialFontIcon.History;
 
         public SearchPageViewModel(INavigationService navigationService, IVinRepository vinRepository)
         : base(navigationService)
@@ -71,7 +89,7 @@ namespace OEM.Pages
                     {
                         UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
                         SearchTerm = "";
-                        BasicVehicleDetails.Clear();
+                        BasicVehicleDetails = null;
                         return;
                     }
 
@@ -80,14 +98,22 @@ namespace OEM.Pages
                     var vehicleDataResponse = await _vinRepository.GetBasicInformationByVin(vin.ToString());
                     if (vehicleDataResponse.IsSuccess)
                     {
-                        BasicVehicleDetails = vehicleDataResponse.BasicVehicleInformation.Results;
+                        BasicVehicleDetails = vehicleDataResponse.BasicVehicleInformation;
                         SearchTerm = vin.ToString().ToUpper();
+                        RecentSearchResults.Add(BasicVehicleDetails);
+
+                        if (RecentSearchResults.Count > 5)
+                        {
+                            RecentSearchResults.RemoveAt(0);
+                        }
+
+                        IsRecentSearchPopulated = true;
                     }
                     else
                     {
                         UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "No information for " + vin.ToString().ToUpper()));
                         SearchTerm = "";
-                        BasicVehicleDetails.Clear();
+                        BasicVehicleDetails = null;
                     }
 
                     IsLoading = false;
@@ -124,7 +150,7 @@ namespace OEM.Pages
             {
                 UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
                 SearchTerm = "";
-                BasicVehicleDetails.Clear();
+                BasicVehicleDetails = null;
                 return;
             }
 

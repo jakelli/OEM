@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OEM.Pages.GaragePage"
-             Title="My Garage">
+             Title="Part Catalog">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-            <Label Text="In Progress!" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"
+            <Label Text="Parts In Progress!" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"
                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
             <Label Text="Please come back later" FontSize="Small" TextColor="{StaticResource NeutralGray5}"
                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>

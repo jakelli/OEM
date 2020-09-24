@@ -19,18 +19,43 @@ namespace OEM.Respositories
         public async Task<(BasicVehicleInformation BasicVehicleInformation, bool IsSuccess)> GetBasicInformationByVin(string vin)
         {
             var result = await _vinWebservice.GetBasicInformationByVin(vin);
-
-            ObservableCollection<VehicleResult> results = new ObservableCollection<VehicleResult>();
+            var mappedBasicVehicleInformation = new BasicVehicleInformation();
+            var plantLocationCity = "";
+            var plantLocationCountry = "";
 
             foreach (VehicleResult vehicleResult in result.Results)
             {
-                if (vehicleResult.Variable == "Body Class"
-                    || vehicleResult.Variable == "Engine Brake (hp)"
-                    || vehicleResult.Variable == "Make"
-                    || vehicleResult.Variable == "Model"
-                    || vehicleResult.Variable == "Model Year")
+                if (vehicleResult.Variable == "Trim")
                 {
-                    results.Add(vehicleResult);
+                    mappedBasicVehicleInformation.Trim = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Make")
+                {
+                    mappedBasicVehicleInformation.Make = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Model")
+                {
+                    mappedBasicVehicleInformation.Model = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Model Year")
+                {
+                    mappedBasicVehicleInformation.Year = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Displacement (L)")
+                {
+                    mappedBasicVehicleInformation.Displacement = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Engine Number of Cylinders")
+                {
+                    mappedBasicVehicleInformation.Cylinders = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Plant City")
+                {
+                    plantLocationCity = vehicleResult.Value;
+                }
+                else if (vehicleResult.Variable == "Plant Country")
+                {
+                    plantLocationCountry = vehicleResult.Value;
                 }
 
                 if (vehicleResult.Variable == "Error Code" && vehicleResult.Value != "0")
@@ -38,16 +63,12 @@ namespace OEM.Respositories
                     return (null, false);
                 }
             }
+            var truncatedVin = result.SearchCriteria.Substring(4, 17);
 
-            var mappedResult = new BasicVehicleInformation
-            {
-                Count = result.Count,
-                SearchCriteria = result.SearchCriteria,
-                Message = result.Message,
-                Results = results
-            };
+            mappedBasicVehicleInformation.Vin = truncatedVin;
+            mappedBasicVehicleInformation.PlantLocation = plantLocationCity + ", " + plantLocationCountry;
 
-            return (mappedResult, result.IsSuccess);
+            return (mappedBasicVehicleInformation, result.IsSuccess);
         }
     }
 }
