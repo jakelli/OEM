@@ -31,6 +31,7 @@ namespace OEM
             containerRegistry.RegisterForNavigation<MainNavigationPage, MainNavigationPageViewModel>();
             containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<ScanPage, ScanPageViewModel>();
+            containerRegistry.RegisterForNavigation<GaragePage, GaragePageViewModel>();
 
             containerRegistry.RegisterInstance<IVinWebservice>(new VinWebservice());
 

@@ -70,6 +70,7 @@ namespace OEM.Pages
                     if (vin.ToString() == null || !vin.ToString().IsValidVin())
                     {
                         UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
+                        SearchTerm = "";
                         BasicVehicleDetails.Clear();
                         return;
                     }
@@ -85,10 +86,23 @@ namespace OEM.Pages
                     else
                     {
                         UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "No information for " + vin.ToString().ToUpper()));
+                        SearchTerm = "";
                         BasicVehicleDetails.Clear();
                     }
 
                     IsLoading = false;
+                });
+            }
+        }
+
+        public Command OpenGarageCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    await _navigationService.NavigateAsync("GaragePage");
+
                 });
             }
         }
@@ -109,6 +123,7 @@ namespace OEM.Pages
             if (!barcodeResult.Text.IsValidVin())
             {
                 UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
+                SearchTerm = "";
                 BasicVehicleDetails.Clear();
                 return;
             }

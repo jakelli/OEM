@@ -87,9 +87,9 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Variable}" FontAttributes="Bold" TextColor="{StaticResource NeutralGray8}"/>
-                                    <Label Text="{Binding Value}" TextColor="{StaticResource NeutralGray8}"/>
+                                <StackLayout Padding="8">
+                                    <Label Padding="8,0,8,0" Text="{Binding Variable}" FontAttributes="Bold" TextColor="{StaticResource NeutralGray8}"/>
+                                    <Label Padding="8,0,8,8" Text="{Binding Value}" TextColor="{StaticResource NeutralGray8}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -97,7 +97,18 @@
                 </ListView>
             </StackLayout>
 
+            <StackLayout Padding="8,0,8,36" HeightRequest="48">
+                <Button HeightRequest="48"
+                        Text="Garage"
+                        Command="{Binding OpenGarageCommand}"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        TextColor="{StaticResource NeutralGray8}"
+                        BorderWidth="1"
+                        BorderColor="{StaticResource NeutralGray8}"
+                        CornerRadius="15"/>
+            </StackLayout>
+            
         </StackLayout>
-
     </ContentPage.Content>
 </ContentPage>
