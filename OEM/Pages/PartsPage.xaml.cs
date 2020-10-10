@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace OEM.Pages
 {
-    public partial class GaragePage : ContentPage
+    public partial class PartsPage : ContentPage
     {
-        public GaragePage()
+        public PartsPage()
         {
             InitializeComponent();
         }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace OEM.Pages
 {
@@ -10,10 +7,6 @@ namespace OEM.Pages
         public SearchPage()
         {
             InitializeComponent();
-        }
-
-        void ListView_ItemSelected(System.Object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
-        {
         }
     }
 }

@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\loading.json" />
+    <AndroidAsset Include="Assets\under_construction.json" />
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

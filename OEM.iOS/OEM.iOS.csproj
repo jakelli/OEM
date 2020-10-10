@@ -128,5 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\loading.json" />
+    <BundleResource Include="Resources\under_construction.json" />
   </ItemGroup>
 </Project>

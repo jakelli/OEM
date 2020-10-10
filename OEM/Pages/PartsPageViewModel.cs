@@ -4,9 +4,9 @@ using Prism.Navigation;
 
 namespace OEM.Pages
 {
-    public class GaragePageViewModel : BaseViewModel
+    public class PartsPageViewModel : BaseViewModel
     {
-        public GaragePageViewModel(INavigationService navigationService)
+        public PartsPageViewModel(INavigationService navigationService)
         : base(navigationService)
         {
             Title = "Part Catalog";

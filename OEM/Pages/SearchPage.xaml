@@ -79,13 +79,13 @@
             <StackLayout Padding="8,32,0,0" IsVisible="{Binding IsLoading,Converter={StaticResource InvertBool}}" Orientation="Horizontal">
                 <Label Padding="0" Text="{Binding BasicVehicleDetails.Year}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
                 <Label Padding="0" Text="{Binding BasicVehicleDetails.Make}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
-                <Label Padding="0" Text="{Binding BasicVehicleDetails.Model, StringFormat=' -  {0:N}'}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Model}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
                 <Label Padding="0" Text="{Binding BasicVehicleDetails.Trim}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
             </StackLayout>
             <StackLayout Padding="8,0,0,0" IsVisible="{Binding IsLoading,Converter={StaticResource InvertBool}}">
                 <StackLayout Orientation="Horizontal">
-                    <Label Padding="0" Text="{Binding BasicVehicleDetails.Displacement, StringFormat='{0:N}L'}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
-                <Label Padding="0" Text="{Binding BasicVehicleDetails.Cylinders, StringFormat=' -  {0:N} Cylinder'}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
+                    <Label Padding="0" Text="{Binding BasicVehicleDetails.Displacement, StringFormat='{0:N}L'}" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
+                <Label Padding="0" Text="{Binding BasicVehicleDetails.Cylinders, StringFormat='{0:N} Cylinder'}" FontSize="Medium" TextColor="{StaticResource NeutralGray8}"/>
                 </StackLayout>
                 <Label Padding="0" Text="{Binding BasicVehicleDetails.PlantLocation, StringFormat='MANUFACTURED IN {0:N}'}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
                 <Label Padding="0" Text="{Binding BasicVehicleDetails.Vin}" FontSize="Medium" TextColor="{StaticResource NeutralGray4}"/>
@@ -102,8 +102,8 @@
             <StackLayout IsVisible="{Binding IsRecentSearchPopulated}"
                 Padding="0"
                 BackgroundColor="White">
-                <StackLayout Padding="8,0,0,0" Orientation="Horizontal">
-                    <Label Text="{Binding RecentIcon}" FontFamily="MaterialDesignIcon"/>
+                <StackLayout Padding="8,0,0,16" Orientation="Horizontal">
+                    <Label Text="{Binding RecentIcon}" FontFamily="MaterialDesignIcon" TextColor="{StaticResource Key=NeutralGray5}"/>
                     <Label Text="Recent searches" TextColor="{StaticResource Key=NeutralGray5}"/>
 
                 </StackLayout>

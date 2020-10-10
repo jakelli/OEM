@@ -84,12 +84,10 @@ namespace OEM.Pages
             {
                 return new Command(async (object vin) =>
                 {
-
-                    if (vin.ToString() == null || !vin.ToString().IsValidVin())
+                    if (vin == null || vin.ToString() == null || !vin.ToString().IsValidVin())
                     {
                         UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
                         SearchTerm = "";
-                        BasicVehicleDetails = null;
                         return;
                     }
 
@@ -113,7 +111,6 @@ namespace OEM.Pages
                     {
                         UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "No information for " + vin.ToString().ToUpper()));
                         SearchTerm = "";
-                        BasicVehicleDetails = null;
                     }
 
                     IsLoading = false;
@@ -121,13 +118,18 @@ namespace OEM.Pages
             }
         }
 
-        public Command OpenGarageCommand
+        public Command OpenPartsCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    await _navigationService.NavigateAsync("GaragePage");
+                    var navigationParameters = new NavigationParameters
+                    {
+                        { "VehicleDetails", BasicVehicleDetails }
+                    };
+
+                    await _navigationService.NavigateAsync("PartsPage");
 
                 });
             }
@@ -150,7 +152,6 @@ namespace OEM.Pages
             {
                 UserDialogs.Instance.Toast(DialogUtils.GetToastConfig(DialogType.ERROR, "Incomplete VIN, please try again"));
                 SearchTerm = "";
-                BasicVehicleDetails = null;
                 return;
             }
 
