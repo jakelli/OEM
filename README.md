@@ -1,8 +1,3 @@
 # OEM
-OEM is a cross platform mobile app for scanning VINs and fetching vehicle details!
-
-Uses the following technologies:
-Xamarin.Forms
-Prism
-Lottie
-Refit
+OEM is a vehicle companion app that lets you scan or enter your VIN to retrieve your vehicle specifications, features and more. All data is fetched from 
+NHTSA | National Highway Traffic Safety Administration.
